@@ -16,7 +16,7 @@
     <nav>
         <ul>
             <li><a href="#cadastrar">Cadastrar</a></li>
-            <li><a href="#buscar">Buscar</a></li>
+            <!-- <li><a href="#buscar">Buscar</a></li> -->
             <li><a href="#listar">Listar</a></li>
             <li><a href="#apagar">Apagar</a></li>
             <li><a href="#atualizar">Atualizar</a></li>
@@ -32,13 +32,13 @@
             <button type="submit">Cadastrar</button>
         </form>
     </section>
-    <section id="buscar">
+    <!-- <section id="buscar">
         <h2>Buscar</h2>
         <form id="formBuscar">
             <input type="text" name="nome" placeholder="Nome do Certificado" required>
             <button type="submit">Buscar</button>
         </form>
-    </section>
+    </section> -->
     <section id="listar">
         <h2>Listar</h2>
         <form id="formListar">
@@ -63,129 +63,71 @@
         </form>
     </section>
     <script>
+        // Painel agora será usando localStorage
         document.getElementById('formCadastrar').addEventListener('submit', function(event) {
             event.preventDefault();
-            // Implementar lógica de cadastro
             const formData = new FormData(event.target);
-            const data = {
-                nm_certificado: formData.get('nome'), // Corrigido para nm_certificado
+            const certificado = {
+                nome: formData.get('nome'),
                 descricao: formData.get('descricao'),
-                dt_emissao: formData.get('data'), // Corrigido para dt_emissao
-                carga_horaria: formData.get('carga') || null // Corrigido para carga_horaria
+                data: formData.get('data'),
+                carga: formData.get('carga') || null
             };
-            console.log('Cadastro realizado:', data);
-
-            fetch('http://localhost:3000/certificado', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Resposta do servidor:', data);
-                alert('Cadastro realizado com sucesso!');
-            })
-            .catch(error => {
-                console.error('Erro ao cadastrar:', error);
-                alert('Erro ao cadastrar certificado.');
-            });
+            localStorage.setItem(certificado.nome, JSON.stringify(certificado));
+            alert('Certificado cadastrado com sucesso!');
+            event.target.reset();
         });
-
-        document.getElementById('formBuscar').addEventListener('submit', function(event) {
-            event.preventDefault();
-            // Implementar lógica de busca
-            const formData = new FormData(event.target);
-            const nome = formData.get('nome');
-            console.log('Busca realizada por:', nome);
-            fetch(`http://localhost:3000/certificado/${nome}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Resultado da busca:', data);
-                    alert('Busca realizada com sucesso!');
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar certificado:', error);
-                    alert('Erro ao buscar certificado.');
-                });
-        });
-
+        // document.getElementById('formBuscar').addEventListener('submit', function(event) {
+        //     event.preventDefault();
+        //     const formData = new FormData(event.target);
+        //     const nome = formData.get('nome');
+        //     const certificado = localStorage.getItem(nome);
+        //     if (certificado) {
+        //         alert(`Certificado encontrado: ${certificado}`);
+        //     } else {
+        //         alert('Certificado não encontrado.');
+        //     }
+        // });
         document.getElementById('formListar').addEventListener('submit', function(event) {
             event.preventDefault();
-            // Implementar lógica de listagem
-            alert('Listagem realizada com sucesso!');
-            fetch('http://localhost:3000/certificado')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Lista de certificados:', data);
-                    alert('Certificados listados no console.');
-                })
-                .catch(error => {
-                    console.error('Erro ao listar certificados:', error);
-                    alert('Erro ao listar certificados.');
-                });
-
+            const certificados = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const certificado = JSON.parse(localStorage.getItem(key));
+                certificados.push(certificado);
+            }
+            alert(`Certificados: ${JSON.stringify(certificados, null, 2)}`);
         });
-
         document.getElementById('formApagar').addEventListener('submit', function(event) {
             event.preventDefault();
-            // Implementar lógica de apagar
             const formData = new FormData(event.target);
             const nome = formData.get('nome');
-            console.log('Apagamento solicitado para:', nome);
-            fetch(`http://localhost:3000/certificado/${nome}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao apagar certificado');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Resposta do servidor:', data);
-                alert('Apagamento realizado com sucesso!');
-            })
-            .catch(error => {
-                console.error('Erro ao apagar certificado:', error);
-                alert('Erro ao apagar certificado.');
-            });
+            if (localStorage.getItem(nome)) {
+                localStorage.removeItem(nome);
+                alert('Certificado apagado com sucesso!');
+            } else {
+                alert('Certificado não encontrado.');
+            }
         });
-
         document.getElementById('formAtualizar').addEventListener('submit', function(event) {
             event.preventDefault();
-            // Implementar lógica de atualização
             const formData = new FormData(event.target);
-            const data = {
-                nm_certificado: formData.get('nome'), // Corrigido para nm_certificado
-                descricao: formData.get('descricao'),
-                dt_emissao: formData.get('data'), // Corrigido para dt_emissao
-                carga_horaria: formData.get('carga') || null // Corrigido para carga_horaria
-            };
-
-            fetch(`http://localhost:3000/certificado/${formData.get('nome')}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao atualizar certificado');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Resposta do servidor:', data);
-                alert('Atualização realizada com sucesso!');
-            })
-            .catch(error => {
-                console.error('Erro ao atualizar certificado:', error);
-                alert('Erro ao atualizar certificado.');
-            });
+            const nome = formData.get('nome');
+            if (localStorage.getItem(nome)) {
+                const certificado = {
+                    nome: nome,
+                    descricao: formData.get('descricao'),
+                    data: formData.get('data'),
+                    carga: formData.get('carga') || null
+                };
+                localStorage.setItem(nome, JSON.stringify(certificado));
+                alert('Certificado atualizado com sucesso!');
+                event.target.reset();
+            } else {
+                alert('Certificado não encontrado.');
+            }
         });
+
     </script>
 </body>
 </html>
