@@ -1,0 +1,23 @@
+.drop-zone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.drop-zone.active {
+    background-color: #eee;
+    border-color: #666;
+    font-style: normal;
+}
+
+.drop-zone img {
+    max-width: 200px;
+    margin-top: 10px;
+    display: block;
+}
+
+#fileInput {
+    display: none;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrossel de Imagens</title>
+  <link rel="stylesheet" href="/assets/css/upload.css">
+  <script src="assets/js/pdf.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js" integrity="sha512-MpDFIChbcXl2QgipQrt1VcPHMldRILetapBl5MPCA9Y8r7qvlwx1/Mc9hNTzY+kS5kX6PdoDq41ws1HiVNLdZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 20px;
+    }
+    .carousel img {
+      height: 150px;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: border 0.3s;
+    }
+    .carousel img.selected {
+      border: 3px solid red;
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#novo">Novo</a></li>
+                <li><a href="#existente">Existente</a></li>
+            </ul>
+        </nav>
+    </header>
+
+  <div id="novo">
+    <h1>Selecionar Imagem</h1>
+    <div class="carousel" id="carousel"></div>
+      <div id="img-escolhida"></div>
+      <input type="text" placeholder="Digite o nome do certificado" id="certificado-nome">
+      <input type="text" placeholder="Digite o nome do beneficiado" id="beneficiado-nome">
+      <input type="text" placeholder="Digite a descrição" id="certificado-descricao">
+      <input type="date" placeholder="Digite a data" id="certificado-data">
+      <button id="criar-certificado">Criar Certificado</button>
+  </div>
+
+  <div id="existente">
+    <h1>Carregar Imagem Existente</h1>
+    <form id="formCarregar">
+      <input type="text" name="nome" placeholder="Nome do Certificado" required>
+      <button type="submit">Carregar</button>
+    </form>
+
+  <script>
+    const carousel = document.getElementById('carousel');
+
+    fetch('/api/uploads')
+      .then(response => response.json())
+      .then(images => {
+        images.forEach(image => {
+          const img = document.createElement('img');
+          img.src = `/assets/uploads/${image}`;
+          img.alt = image;
+          img.addEventListener('click', () => {
+            document.querySelectorAll('.carousel img').forEach(i => i.classList.remove('selected'));
+            img.classList.add('selected');
+            document.getElementById('img-escolhida').innerHTML = img.src
+            console.log(img);
+            
+          });
+          carousel.appendChild(img);
+        });
+      })
+      .catch(error => {
+        console.error('Erro ao carregar imagens:', error);
+      });
+  </script>
+</body>
+</html>

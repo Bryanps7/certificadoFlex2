@@ -12,10 +12,6 @@ const Certificado = db.define('certificado', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    nm_beneficiado: { // Nome da pessoa que vai receber
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     descricao: { // Descrição do certificado
         type: DataTypes.STRING,
         allowNull: false

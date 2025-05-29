@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        section {
+            margin: 20px 0;
+            background-color: rgba(255, 0, 0, 0.205);
+        }
+    </style>
+</head>
+<body>
+    <h1>Painel de Controle</h1>
+    <nav>
+        <ul>
+            <li><a href="#cadastrar">Cadastrar</a></li>
+            <li><a href="#buscar">Buscar</a></li>
+            <li><a href="#listar">Listar</a></li>
+            <li><a href="#apagar">Apagar</a></li>
+            <li><a href="#atualizar">Atualizar</a></li>
+        </ul>
+    </nav>
+    <section id="cadastrar">
+        <h2>Cadastrar</h2>
+        <form id="formCadastrar">
+            <input type="text" name="nome" placeholder="Nome do Certificado" required>
+            <input type="text" name="descricao" placeholder="Descrição do Certificado" required>
+            <input type="date" name="data" placeholder="Data do Certificado" required>
+            <input type="number" name="carga" placeholder="Carga Horária (opcional)">
+            <button type="submit">Cadastrar</button>
+        </form>
+    </section>
+    <section id="buscar">
+        <h2>Buscar</h2>
+        <form id="formBuscar">
+            <input type="text" name="nome" placeholder="Nome do Certificado" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+    <section id="listar">
+        <h2>Listar</h2>
+        <form id="formListar">
+            <button type="submit">Listar</button>
+        </form>
+    </section>
+    <section id="apagar">
+        <h2>Apagar</h2>
+        <form id="formApagar">
+            <input type="text" name="nome" placeholder="Nome" required>
+            <button type="submit">Apagar</button>
+        </form>
+    </section>
+    <section id="atualizar">
+        <h2>Atualizar</h2>
+        <form id="formAtualizar">
+            <input type="text" name="nome" placeholder="Nome" required>
+            <input type="text" name="descricao" placeholder="Nova Descrição" required>
+            <input type="date" name="data" placeholder="Nova Data" required>
+            <input type="number" name="carga" placeholder="Nova Carga Horária (opcional)">
+            <button type="submit">Atualizar</button>
+        </form>
+    </section>
+    <script>
+        document.getElementById('formCadastrar').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Implementar lógica de cadastro
+            const formData = new FormData(event.target);
+            const data = {
+                nm_certificado: formData.get('nome'), // Corrigido para nm_certificado
+                descricao: formData.get('descricao'),
+                dt_emissao: formData.get('data'), // Corrigido para dt_emissao
+                carga_horaria: formData.get('carga') || null // Corrigido para carga_horaria
+            };
+            console.log('Cadastro realizado:', data);
+
+            fetch('http://localhost:3000/certificado', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Resposta do servidor:', data);
+                alert('Cadastro realizado com sucesso!');
+            })
+            .catch(error => {
+                console.error('Erro ao cadastrar:', error);
+                alert('Erro ao cadastrar certificado.');
+            });
+        });
+
+        document.getElementById('formBuscar').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Implementar lógica de busca
+            const formData = new FormData(event.target);
+            const nome = formData.get('nome');
+            console.log('Busca realizada por:', nome);
+            fetch(`http://localhost:3000/certificado/${nome}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Resultado da busca:', data);
+                    alert('Busca realizada com sucesso!');
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar certificado:', error);
+                    alert('Erro ao buscar certificado.');
+                });
+        });
+
+        document.getElementById('formListar').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Implementar lógica de listagem
+            alert('Listagem realizada com sucesso!');
+            fetch('http://localhost:3000/certificado')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Lista de certificados:', data);
+                    alert('Certificados listados no console.');
+                })
+                .catch(error => {
+                    console.error('Erro ao listar certificados:', error);
+                    alert('Erro ao listar certificados.');
+                });
+
+        });
+
+        document.getElementById('formApagar').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Implementar lógica de apagar
+            const formData = new FormData(event.target);
+            const nome = formData.get('nome');
+            console.log('Apagamento solicitado para:', nome);
+            fetch(`http://localhost:3000/certificado/${nome}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao apagar certificado');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Resposta do servidor:', data);
+                alert('Apagamento realizado com sucesso!');
+            })
+            .catch(error => {
+                console.error('Erro ao apagar certificado:', error);
+                alert('Erro ao apagar certificado.');
+            });
+        });
+
+        document.getElementById('formAtualizar').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Implementar lógica de atualização
+            const formData = new FormData(event.target);
+            const data = {
+                nm_certificado: formData.get('nome'), // Corrigido para nm_certificado
+                descricao: formData.get('descricao'),
+                dt_emissao: formData.get('data'), // Corrigido para dt_emissao
+                carga_horaria: formData.get('carga') || null // Corrigido para carga_horaria
+            };
+
+            fetch(`http://localhost:3000/certificado/${formData.get('nome')}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao atualizar certificado');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Resposta do servidor:', data);
+                alert('Atualização realizada com sucesso!');
+            })
+            .catch(error => {
+                console.error('Erro ao atualizar certificado:', error);
+                alert('Erro ao atualizar certificado.');
+            });
+        });
+    </script>
+</body>
+</html>
