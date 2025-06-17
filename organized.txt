@@ -1,0 +1,19 @@
+CERTIFICADOFLEX2/
+├── public/
+│   └── assets/
+│       ├── css/
+│       │   ├── base.css         # Estilos base, resets
+│       │   ├── main.css         # Estilos globais do site
+│       │   ├── dashboard.css    # Estilos específicos do painel
+│       │   └── scrollbar.css
+│       └── js/
+│           ├── main.js          # Scripts globais
+│           ├── dashboard.js     # Lógica do painel
+│           ├── pdf-generator.js # Lógica para gerar PDFs
+│           └── upload.js
+└── src/
+    ├── views/
+    │   ├── index.html
+    │   ├── dashboard.html
+    │   └── create-certificate.html
+    └── index.js
