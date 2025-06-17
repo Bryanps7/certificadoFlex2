@@ -22,7 +22,7 @@ app.get('/api/uploads', (req, res) => {
 
     // Filtrar apenas arquivos de imagem
     const imageFiles = files.filter(file =>
-      /\.(jpg|jpeg|png|gif)$/i.test(file)
+      /\.(jpg|jpeg|png|gif|webp)$/i.test(file)
     );
 
     res.json(imageFiles);

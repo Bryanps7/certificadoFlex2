@@ -112,10 +112,6 @@ nav ul li a {
     text-align: center;
 }
 
-nav ul li a.active {
-    background-color: #0056b3;
-}
-
 nav ul li a:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
@@ -124,10 +120,6 @@ nav ul li a:hover {
 body.dark-mode nav ul li a {
     background-color: #444444;
     color: #e0e0e0;
-}
-
-body.dark-mode nav ul li a.active {
-    background-color: #555555;
 }
 
 body.dark-mode nav ul li a:hover {
@@ -177,12 +169,6 @@ form {
 
 form fieldset {
     padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-body.dark-mode form fieldset {
-    border-color: #555;
 }
 
 .form-group {
@@ -192,6 +178,7 @@ body.dark-mode form fieldset {
 }
 
 form input,
+form textarea,
 form button {
     padding: 0.8rem;
     border-radius: 5px;
@@ -199,25 +186,29 @@ form button {
     font-family: 'Poppins', sans-serif;
 }
 
-form input {
+form input, form textarea {
     border: 1px solid #ccc;
     background-color: #fff;
     transition: border-color 0.3s ease;
 }
 
-body.dark-mode form input {
+form button {
+    margin-top: 15px;
+}
+
+body.dark-mode form input, body.dark-mode form textarea {
     border-color: #555;
     background-color: #333;
     color: #e0e0e0;
 }
 
-form input:focus {
+form input:focus, form textarea:focus {
     outline: none;
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
-body.dark-mode form input:focus {
+body.dark-mode form input:focus, body.dark-mode form textarea:focus {
     border-color: #66b0ff;
     box-shadow: 0 0 5px rgba(102, 176, 255, 0.3);
 }
@@ -227,6 +218,7 @@ form button {
     color: white;
     border: none;
     cursor: pointer;
+    padding: 0.8rem;
     transition: all 0.3s ease;
 }
 
@@ -252,43 +244,51 @@ body.dark-mode form label {
     color: #b0b0b0;
 }
 
-/* Drop Zone */
-.drop-zone {
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    padding: 2rem;
-    text-align: center;
+/* Estilo para a seção de listar */
+#certificados-lista {
+    margin-top: 1rem;
+    padding: 1rem;
     background-color: #f9f9f9;
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
 }
 
-body.dark-mode .drop-zone {
-    border-color: #555;
-    background-color: #333;
+body.dark-mode #certificados-lista {
+    background-color: #2c2c2c;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.drop-zone p {
-    color: #666;
+#certificados-lista ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#certificados-lista li {
+    padding: 0.8rem;
+    border-bottom: 1px solid #ddd;
     font-size: 1rem;
+    color: #333;
 }
 
-body.dark-mode .drop-zone p {
-    color: #b0b0b0;
+body.dark-mode #certificados-lista li {
+    border-bottom: 1px solid #444;
+    color: #e0e0e0;
 }
 
-.drop-zone.dragover {
-    border-color: #007bff;
-    background-color: #e6f0ff;
+#certificados-lista li:last-child {
+    border-bottom: none;
 }
 
-body.dark-mode .drop-zone.dragover {
-    border-color: #66b0ff;
-    background-color: #2a3a5a;
+#certificados-lista li:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
 }
 
-/* Esconder input de arquivo */
-#fileInput {
-    display: none;
+body.dark-mode #certificados-lista li:hover {
+    background-color: #3a3a3a;
 }
 
 /* Responsividade */
@@ -314,10 +314,6 @@ body.dark-mode .drop-zone.dragover {
     form button {
         font-size: 0.9rem;
     }
-
-    .drop-zone {
-        padding: 1.5rem;
-    }
 }
 
 @media (max-width: 480px) {
@@ -337,39 +333,5 @@ body.dark-mode .drop-zone.dragover {
     .tab-content {
         padding: 1rem;
     }
-
-    .drop-zone {
-        padding: 1rem;
-    }
 }
 
-/* Overlay */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    display: none; /* Oculto por padrão */
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    z-index: 1000;
-    transition: background-color 0.3s ease;
-}
-
-.overlay.active {
-    display: flex; /* Exibe quando ativo */
-}
-
-.overlay img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-}
-
-button {
-    margin-top: 15px;
-}

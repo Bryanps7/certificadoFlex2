@@ -63,14 +63,19 @@ gerar_certificado.addEventListener('click', async () => {
 function baixarMano() {
     console.log('Baixando o certificado...');
 
-    // const nm_certificado = document.getElementById('nome-beneficiado').value;
-    const nm_certificado = "Bryan Prinz"
+    const nm_certificado = document.getElementById('nome-beneficiado').value;
+    // const nm_certificado = "Bryan Prinz"
     const slug_beneficiado = nm_certificado.replace(/ /g, '-').toLowerCase();
     console.log(slug_beneficiado);
-    // const nm_beneficiado = document.getElementById('aluno-safada').innerHTML;
-    // const dados = document.getElementById('descricao-safada').innerHTML
-    // const data = document.getElementById('data-safada').innerHTML;
-    // const cargo = document.getElementById('carga-safada').innerHTML;
+
+    const background = document.getElementById('img-escolhida').innerHTML;
+    const nm_beneficiado = document.getElementById('aluno-safada').innerHTML;
+    const dados = document.getElementById('descricao-safada').innerHTML
+    const data = document.getElementById('data-safada').innerHTML;
+    const cargo = document.getElementById('carga-safada').innerHTML;
+
+    console.log(background);
+    
 
     const element = `
         <style>
@@ -83,7 +88,8 @@ function baixarMano() {
             div {
                 margin: 0;
                 padding: 0;
-                background-color: red;
+                background: url('${background}');
+                background-size: 100vw;
                 width: 297mm;
                 height: 794px;
                 box-sizing: border-box;
@@ -91,31 +97,13 @@ function baixarMano() {
         </style>
 
         <div>
-            <h1>Curso de Programação com Node.js</h1>
-            <p id="aluno-safada">O Aluno: Bryan Prinz</p>
-            <p id="descricao-safada">Certificado de conclusão do curso intensivo de Programação Web.</p>
-            <p id="data-safada">19 de agosto de 2025</p>
-            <p id="carga-safada">Carga Horária: 800</p>
+            <h1>${nm_certificado}</h1>
+            <p id="aluno-safada">O Aluno(a): ${nm_beneficiado}</p>
+            <p id="descricao-safada">${dados}</p>
+            <p id="data-safada">${data}</p>
+            <p id="carga-safada">Carga Horária: ${cargo}</p>
         </div>
     `
-
-    // <h1 style="font-size: 2.5em;">${nm_certificado}</h1>
-    // <p style="font-size: 1.5em;">O Aluno: ${nm_beneficiado}</p>
-    // <p style="font-size: 1.5em;">${dados}</p>
-    // <p style="font-size: 1.5em;">${data}</p>
-    // <p style="font-size: 1.5em;">Carga Horária: ${cargo}</p>
-
-    // element.style.margin = '0';
-    // element.style.width = '210mm';
-    // element.style.height = '297mm';
-    // element.style.display = 'block';
-    // element.style.position = 'relative';
-    // element.style.backgroundColor = '#fff';
-
-    // const h1 = element.querySelector('h1');
-    // if (h1) {
-    //     h1.style.marginTop = '0';
-    // }
 
     const options = {
         margin: [0, 0, 0, 0],
@@ -125,12 +113,7 @@ function baixarMano() {
             unit: 'mm',
             format: 'a4',
             orientation: 'landscape'
-        },
-        // image: {
-        //     type: 'jpeg',
-        //     quality: 0.98
-        // },
-        // setDisplayMode: 'fullpage'
+        }
     };
 
     html2pdf().set(options).from(element).save().then(() => {

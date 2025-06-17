@@ -1,18 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Upload de Imagens</title>
-    <link rel="stylesheet" href="assets/css/upload.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/upload.css" />
     <script src="assets/js/upload.js" defer></script>
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
 </head>
 <body>
-
-
-    <div id="dropZone" class="drop-zone">
-        <p>Arraste e solte imagens aqui ou clique para selecionar</p>
+    <header>
+        <div class="container">
+            <h1>Upload de Imagens</h1>
+            <button id="theme-toggle" aria-label="Alternar tema">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section id="upload" class="tab-content active">
+                <h2>Upload de Imagens</h2>
+                <form id="formUpload">
+                    <fieldset>
+                        <legend>Enviar Imagem</legend>
+                        <div class="form-group">
+                            <label for="fileInput">Selecionar Imagem</label>
+                            <div id="dropZone" class="drop-zone">
+                                <p>Arraste e solte imagens aqui ou clique para selecionar</p>
+                            </div>
+                            <input type="file" id="fileInput" name="imagem" accept="image/*" />
+                        </div>
+                    </fieldset>
+                </form>
+            </section>
+        </div>
+    </main>
+    <div id="overlay" class="overlay">
+        <p>Arraste e solte sua imagem aqui!</p>
     </div>
-    <input type="file" id="fileInput" accept="image/*" />
 </body>
 </html>

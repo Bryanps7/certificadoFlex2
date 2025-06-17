@@ -1,0 +1,200 @@
+/* Reset e Configurações Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* Contêiner */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.dark-mode header {
+    background-color: #2c2c2c;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #007bff;
+}
+
+body.dark-mode header h1 {
+    color: #66b0ff;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode #theme-toggle {
+    color: #66b0ff;
+}
+
+#theme-toggle:hover {
+    color: #0056b3;
+}
+
+body.dark-mode #theme-toggle:hover {
+    color: #99c2ff;
+}
+
+/* Navegação */
+nav {
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+}
+
+body.dark-mode nav {
+    background-color: #333333;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+nav ul li {
+    flex: 1;
+    min-width: 200px;
+}
+
+nav ul li a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+nav ul li a:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+body.dark-mode nav ul li a {
+    background-color: #444444;
+    color: #e0e0e0;
+}
+
+body.dark-mode nav ul li a:hover {
+    background-color: #555555;
+}
+
+nav ul li a.active {
+    background-color: #0056b3;
+    font-weight: 600;
+}
+
+body.dark-mode nav ul li a.active {
+    background-color: #666666;
+}
+
+/* Main */
+main {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+main h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+main p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+body.dark-mode main p {
+    color: #b0b0b0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    nav ul li {
+        min-width: auto;
+    }
+
+    nav ul li a {
+        padding: 0.8rem;
+    }
+
+    main h2 {
+        font-size: 1.5rem;
+    }
+
+    main p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    #theme-toggle {
+        font-size: 1.2rem;
+    }
+}

@@ -1,14 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Upload de Imagens</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerador de Certificados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.svg" />
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <a href="criar-certificado.html">A</a><br>
-    <a href="criar-certificados.html">B</a><br>
-    <a href="upload-background.html">C</a><br>
-    <a href="painel.html">D</a>
+    <header>
+        <div class="container">
+            <h1>Gerador de Certificados</h1>
+            <button id="theme-toggle" aria-label="Alternar tema">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="criar-certificado.html"><i class="fas fa-certificate"></i> Criar um Certificado</a></li>
+                <li><a href="criar-certificados.html"><i class="fas fa-copy"></i> Criar Vários Certificados</a></li>
+                <li><a href="upload-background.html" class="active"><i class="fas fa-upload"></i> Upload de Imagens</a></li>
+                <li><a href="painel.html"><i class="fas fa-cog"></i> Gerenciar Certificados</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <h2>Bem-vindo ao Gerador de Certificados</h2>
+            <p>Escolha uma opção no menu acima para começar a criar ou gerenciar seus certificados.</p>
+            <p>Feito por Bryan Prinz.</p>
+        </div>
+    </main>
+    <script>
+        // JavaScript para alternar tema
+        const toggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const icon = toggleButton.querySelector('i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        });
+    </script>
 </body>
 </html>

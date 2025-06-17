@@ -1,133 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        section {
-            margin: 20px 0;
-            background-color: rgba(255, 0, 0, 0.205);
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel de Controle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.svg" />
+    <link rel="stylesheet" href="./assets/css/painel.css">
+    <script src="./assets/js/painel.js" defer></script>
 </head>
 <body>
-    <h1>Painel de Controle</h1>
+    <header>
+        <div class="container">
+            <h1>Painel de Controle</h1>
+            <button id="theme-toggle" aria-label="Alternar tema">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
     <nav>
-        <ul>
-            <li><a href="#cadastrar">Cadastrar</a></li>
-            <!-- <li><a href="#buscar">Buscar</a></li> -->
-            <li><a href="#listar">Listar</a></li>
-            <li><a href="#apagar">Apagar</a></li>
-            <li><a href="#atualizar">Atualizar</a></li>
-        </ul>
+        <div class="container">
+            <ul>
+                <li><a href="#cadastrar" class="nav-link"><i class="fas fa-plus"></i> Cadastrar</a></li>
+                <li><a href="#listar" class="nav-link"><i class="fas fa-list"></i> Listar</a></li>
+                <li><a href="#apagar" class="nav-link"><i class="fas fa-trash"></i> Apagar</a></li>
+                <li><a href="#atualizar" class="nav-link"><i class="fas fa-edit"></i> Atualizar</a></li>
+            </ul>
+        </div>
     </nav>
-    <section id="cadastrar">
-        <h2>Cadastrar</h2>
-        <form id="formCadastrar">
-            <input type="text" name="nome" placeholder="Nome do Certificado" required>
-            <input type="text" name="descricao" placeholder="Descrição do Certificado" required>
-            <input type="date" name="data" placeholder="Data do Certificado" required>
-            <input type="number" name="carga" placeholder="Carga Horária (opcional)">
-            <button type="submit">Cadastrar</button>
-        </form>
-    </section>
-    <!-- <section id="buscar">
-        <h2>Buscar</h2>
-        <form id="formBuscar">
-            <input type="text" name="nome" placeholder="Nome do Certificado" required>
-            <button type="submit">Buscar</button>
-        </form>
-    </section> -->
-    <section id="listar">
-        <h2>Listar</h2>
-        <form id="formListar">
-            <button type="submit">Listar</button>
-        </form>
-    </section>
-    <section id="apagar">
-        <h2>Apagar</h2>
-        <form id="formApagar">
-            <input type="text" name="nome" placeholder="Nome" required>
-            <button type="submit">Apagar</button>
-        </form>
-    </section>
-    <section id="atualizar">
-        <h2>Atualizar</h2>
-        <form id="formAtualizar">
-            <input type="text" name="nome" placeholder="Nome" required>
-            <input type="text" name="descricao" placeholder="Nova Descrição" required>
-            <input type="date" name="data" placeholder="Nova Data" required>
-            <input type="number" name="carga" placeholder="Nova Carga Horária (opcional)">
-            <button type="submit">Atualizar</button>
-        </form>
-    </section>
-    <script>
-        // Painel agora será usando localStorage
-        document.getElementById('formCadastrar').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const certificado = {
-                nome: formData.get('nome'),
-                descricao: formData.get('descricao'),
-                data: formData.get('data'),
-                carga: formData.get('carga') || null
-            };
-            localStorage.setItem(certificado.nome, JSON.stringify(certificado));
-            alert('Certificado cadastrado com sucesso!');
-            event.target.reset();
-        });
-        // document.getElementById('formBuscar').addEventListener('submit', function(event) {
-        //     event.preventDefault();
-        //     const formData = new FormData(event.target);
-        //     const nome = formData.get('nome');
-        //     const certificado = localStorage.getItem(nome);
-        //     if (certificado) {
-        //         alert(`Certificado encontrado: ${certificado}`);
-        //     } else {
-        //         alert('Certificado não encontrado.');
-        //     }
-        // });
-        document.getElementById('formListar').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const certificados = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                const certificado = JSON.parse(localStorage.getItem(key));
-                certificados.push(certificado);
-            }
-            alert(`Certificados: ${JSON.stringify(certificados, null, 2)}`);
-        });
-        document.getElementById('formApagar').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const nome = formData.get('nome');
-            if (localStorage.getItem(nome)) {
-                localStorage.removeItem(nome);
-                alert('Certificado apagado com sucesso!');
-            } else {
-                alert('Certificado não encontrado.');
-            }
-        });
-        document.getElementById('formAtualizar').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const nome = formData.get('nome');
-            if (localStorage.getItem(nome)) {
-                const certificado = {
-                    nome: nome,
-                    descricao: formData.get('descricao'),
-                    data: formData.get('data'),
-                    carga: formData.get('carga') || null
-                };
-                localStorage.setItem(nome, JSON.stringify(certificado));
-                alert('Certificado atualizado com sucesso!');
-                event.target.reset();
-            } else {
-                alert('Certificado não encontrado.');
-            }
-        });
-
-    </script>
+    <main>
+        <div class="container">
+            <section id="cadastrar" class="tab-content">
+                <h2>Cadastrar</h2>
+                <form id="formCadastrar">
+                    <fieldset>
+                        <legend>Cadastrar Certificado</legend>
+                        <div class="form-group">
+                            <label for="nome-cadastrar">Nome do Certificado</label>
+                            <input type="text" id="nome-cadastrar" name="nome" placeholder="Nome do Certificado" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao-cadastrar">Descrição do Certificado</label>
+                            <textarea id="descricao-cadastrar" name="descricao" placeholder="Descrição do Certificado" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="data-cadastrar">Data do Certificado</label>
+                            <input type="date" id="data-cadastrar" name="data" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carga-cadastrar">Carga Horária (opcional)</label>
+                            <input type="number" id="carga-cadastrar" name="carga" placeholder="Carga Horária (opcional)">
+                        </div>
+                        <button type="submit">Cadastrar</button>
+                    </fieldset>
+                </form>
+            </section>
+            <section id="listar" class="tab-content">
+                <h2>Listar</h2>
+                <form id="formListar">
+                    <fieldset>
+                        <legend>Listar Certificados</legend>
+                        <button type="submit">Listar</button>
+                    </fieldset>
+                </form>
+                <div id="certificados-lista"></div> <!-- Elemento para exibir os certificados -->
+            </section>
+            <section id="apagar" class="tab-content">
+                <h2>Apagar</h2>
+                <form id="formApagar">
+                    <fieldset>
+                        <legend>Apagar Certificado</legend>
+                        <div class="form-group">
+                            <label for="nome-apagar">Nome do Certificado</label>
+                            <input type="text" id="nome-apagar" name="nome" placeholder="Nome" required>
+                        </div>
+                        <button type="submit">Apagar</button>
+                    </fieldset>
+                </form>
+            </section>
+            <section id="atualizar" class="tab-content">
+                <h2>Atualizar</h2>
+                <form id="formAtualizar">
+                    <fieldset>
+                        <legend>Atualizar Certificado</legend>
+                        <div class="form-group">
+                            <label for="nome-atualizar">Nome do Certificado</label>
+                            <input type="text" id="nome-atualizar" name="nome" placeholder="Nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao-atualizar">Nova Descrição</label>
+                            <textarea id="descricao-atualizar" name="descricao" placeholder="Nova Descrição" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="data-atualizar">Nova Data</label>
+                            <input type="date" id="data-atualizar" name="data" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carga-atualizar">Nova Carga Horária (opcional)</label>
+                            <input type="number" id="carga-atualizar" name="carga" placeholder="Nova Carga Horária (opcional)">
+                        </div>
+                        <button type="submit">Atualizar</button>
+                    </fieldset>
+                </form>
+            </section>
+        </div>
+    </main>
 </body>
 </html>

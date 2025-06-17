@@ -1,8 +1,11 @@
 const dropZone = document.getElementById("dropZone");
+const overlay = document.getElementById("overlay");
 const fileInput = document.getElementById("fileInput");
+const toggleButton = document.getElementById("theme-toggle");
+const body = document.body;
 
 // Permitir clique para abrir o seletor de arquivos
-dropZone.addEventListener("click", () => {
+overlay.addEventListener("click", () => {
     fileInput.click();
 });
 
@@ -12,19 +15,39 @@ fileInput.addEventListener("change", () => {
 });
 
 // Arrastar arquivos
-dropZone.addEventListener("dragover", (e) => {
+document.addEventListener("dragenter", (e) => {
     e.preventDefault();
-    dropZone.classList.add("active");
+    overlay.style.display = "flex"; // Exibe o overlay
 });
 
-dropZone.addEventListener("dragleave", () => {
-    dropZone.classList.remove("active");
+document.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "copy"; // Indica que o arquivo pode ser solto
 });
 
-dropZone.addEventListener("drop", (e) => {
+document.addEventListener("dragleave", (e) => {
     e.preventDefault();
-    dropZone.classList.remove("active");
-    handleFiles(e.dataTransfer.files);
+    const rect = overlay.getBoundingClientRect();
+    const isOutside =
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom;
+
+    if (isOutside) {
+        overlay.style.display = "none"; // Oculta o overlay
+    }
+});
+
+overlay.addEventListener("drop", (e) => {
+    e.preventDefault();
+    overlay.style.display = "none"; // Oculta o overlay após soltar a imagem
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        console.log("Imagem solta:", files[0]);
+        handleFiles(files); // Processa os arquivos soltos
+    }
 });
 
 // Função central para envio e exibição das imagens
@@ -45,11 +68,31 @@ function handleFiles(files) {
 
                     const img = document.createElement("img");
                     img.src = `/assets/uploads/${result.filePath.split('/').pop()}`;
-                    dropZone.appendChild(img);
+                    document.getElementById("dropZone").appendChild(img); // Exibe a imagem no campo correto
+
+                    // Exibe o alerta de sucesso
+                    alert("Imagem enviada com sucesso!");
                 })
                 .catch(error => {
                     console.error("Erro ao enviar a imagem:", error);
+                    alert("Erro ao enviar a imagem. Tente novamente.");
                 });
+        } else {
+            alert("Por favor, solte apenas arquivos de imagem.");
         }
     }
 }
+
+// Alternar entre modo claro e escuro
+toggleButton.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+
+    const icon = toggleButton.querySelector("i");
+    if (body.classList.contains("dark-mode")) {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+    } else {
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+    }
+});
