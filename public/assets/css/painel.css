@@ -5,10 +5,6 @@
     box-sizing: border-box;
 }
 
-.title {
-    text-decoration: none;
-}
-
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f0f2f5;
